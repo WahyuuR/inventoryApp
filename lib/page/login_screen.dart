@@ -24,8 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
       for (var user in data) {
         if (user['user'] == _username && user['password'] == _password) {
           // Login berhasil, arahkan ke halaman dashboard
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => DashboardPage()));
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => HomeScreen()));
           return;
         }
       }
@@ -42,13 +42,13 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.orangeAccent,
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Card(
-              color: Colors.black,
+              color: Color.fromARGB(255, 42, 38, 38),
               elevation: 8.0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(26.0),
