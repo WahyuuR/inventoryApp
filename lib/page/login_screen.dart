@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (user['user'] == _username && user['password'] == _password) {
           // Login berhasil, arahkan ke halaman dashboard
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomeScreen()));
+              context, MaterialPageRoute(builder: (context) => HomeScreen(title: '',)));
           return;
         }
       }
