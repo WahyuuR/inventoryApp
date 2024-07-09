@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart';
 
 class Create extends StatefulWidget {
@@ -14,6 +16,26 @@ class _CreateState extends State<Create> {
   TextEditingController descriptionController = TextEditingController();
   TextEditingController stockController = TextEditingController();
   TextEditingController photoController = TextEditingController();
+  File? _image;
+  String? _imageUrl;
+
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage() async {
+    final XFile? pickedFile =
+        await _picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+        _imageUrl = null;
+        photoController.text =
+            pickedFile.path.split('/').last; // Show file name
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
 
   createData() async {
     var url =
@@ -21,7 +43,9 @@ class _CreateState extends State<Create> {
     var posBody = {
       "NamaItem": nameController.text,
       "deskripsi": descriptionController.text,
-      "foto": photoController.text,
+      "foto": _image != null
+          ? base64Encode(_image!.readAsBytesSync())
+          : _imageUrl ?? "",
       "stok": stockController.text
     };
     var response = await post(
@@ -44,57 +68,93 @@ class _CreateState extends State<Create> {
       appBar: AppBar(
         title: const Text('Create'),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: TextFormField(
-              controller: nameController,
-              style: const TextStyle(fontSize: 12.0),
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(labelText: "Nama Item"),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: TextFormField(
-              controller: descriptionController,
-              style: const TextStyle(fontSize: 12.0),
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(labelText: "Deskripsi"),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: TextFormField(
-              controller: photoController,
-              style: const TextStyle(fontSize: 12.0),
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: "foto"),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: TextFormField(
-              controller: stockController,
-              style: const TextStyle(fontSize: 12.0),
-              keyboardType: TextInputType.text,
-              decoration: const InputDecoration(labelText: "stok"),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: TextButton(
-              child: const Text(
-                'Simpan',
-                style: TextStyle(fontSize: 12.0),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: TextFormField(
+                controller: nameController,
+                style: const TextStyle(fontSize: 12.0),
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(labelText: "Nama Item"),
               ),
-              onPressed: () {
-                createData();
-              },
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: TextFormField(
+                controller: descriptionController,
+                style: const TextStyle(fontSize: 12.0),
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(labelText: "Deskripsi"),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: photoController,
+                      style: const TextStyle(fontSize: 12.0),
+                      keyboardType: TextInputType.text,
+                      decoration: const InputDecoration(labelText: "Foto"),
+                      readOnly: true,
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.image),
+                    onPressed: _pickImage,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: TextFormField(
+                controller: stockController,
+                style: const TextStyle(fontSize: 12.0),
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(labelText: "Stok"),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: TextFormField(
+                decoration: const InputDecoration(labelText: "Image URL"),
+                onChanged: (value) {
+                  setState(() {
+                    _imageUrl = value;
+                    _image = null;
+                    photoController.text = value;
+                  });
+                },
+              ),
+            ),
+            if (_image != null)
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Image.file(_image!),
+              ),
+            if (_imageUrl != null && _imageUrl!.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Image.network(_imageUrl!),
+              ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: TextButton(
+                child: const Text(
+                  'Simpan',
+                  style: TextStyle(fontSize: 12.0),
+                ),
+                onPressed: () {
+                  createData();
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

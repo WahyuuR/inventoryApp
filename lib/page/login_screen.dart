@@ -1,5 +1,3 @@
-// login.dart
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -18,24 +16,34 @@ class _LoginScreenState extends State<LoginScreen> {
       'https://6687c6d60bc7155dc0190f77.mockapi.io/api/v1/users';
 
   Future<void> _login() async {
-    final response = await http.get(Uri.parse(apiUrl));
-    if (response.statusCode == 200) {
-      List<dynamic> data = json.decode(response.body);
-      for (var user in data) {
-        if (user['user'] == _username && user['password'] == _password) {
-          // Login berhasil, arahkan ke halaman dashboard
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomeScreen(title: '',)));
-          return;
+    try {
+      final response = await http.get(Uri.parse(apiUrl));
+      if (response.statusCode == 200) {
+        List<dynamic> data = json.decode(response.body);
+        for (var user in data) {
+          if (user['user'] == _username && user['password'] == _password) {
+            // Login berhasil, arahkan ke halaman dashboard
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => HomeScreen(
+                          title: '',
+                        )));
+            return;
+          }
         }
+        // Login gagal, tampilkan pesan kesalahan
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Login failed. Please check your credentials.')));
+      } else {
+        // Gagal mengambil data dari API
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to fetch data from API')));
       }
-      // Login gagal, tampilkan pesan kesalahan
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Login failed. Please check your credentials.')));
-    } else {
-      // Gagal mengambil data dari API
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to fetch data from API')));
+    } catch (e) {
+      // Menangani kesalahan jaringan atau lainnya
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     }
   }
 

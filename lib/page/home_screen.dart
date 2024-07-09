@@ -3,7 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:projek_akhir/page/create_screen.dart';
-import 'package:projek_akhir/page/delete_screen.dart';
+import 'package:projek_akhir/page/delete_screen.dart'; // Make sure this import is correct
+import 'package:projek_akhir/page/login_screen.dart'; // Make sure this import is correct
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.title});
@@ -29,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
       var jsonResponse = jsonDecode(response.body);
       setState(() {
         loading = false;
-        print(jsonResponse);
         dataList = jsonResponse;
         if (kDebugMode) {
           print('Number of items: $jsonResponse.');
@@ -46,102 +46,160 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 0.0), // Add left padding
+          child: Image.asset(
+            'assets/logo_warungKomputer.png',
+            height: 400,
+          ),
+        ),
+        title: Text(
+          'HOME',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14.0, // Set font size for description
+          ),
+        ),
+        toolbarHeight: 100,
+        backgroundColor: Colors.black, // Change app bar color to black
       ),
-      body: loading == true
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : ListView.builder(
-              primary: false,
-              shrinkWrap: true,
-              itemCount: dataList.length,
-              itemBuilder: (ctx, i) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                    onTap: () async {
-                      var result = await Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => EEditDelete(
-                            data: dataList[i],
+      body: Container(
+        color: Colors.orange, // Change body color to orange
+        child: loading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // Display 2 cards in each row
+                ),
+                itemCount: dataList.length,
+                itemBuilder: (ctx, i) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      onTap: () async {
+                        var result = await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => EEditDelete(
+                              data: dataList[i],
+                            ),
                           ),
-                        ),
-                      );
-                      if (result == 'true') {
-                        setState(() {
-                          loading = true;
-                          getData();
-                        });
-                      }
-                    },
-                    child: Card(
-                      elevation: 8.0,
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Row(
-                          children: [
-                            Expanded(
-                                child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    const Text(':'),
-                                    Image.asset('assets/wajahkodok.jpg')
-                                  ],
+                        );
+                        if (result == 'true') {
+                          setState(() {
+                            loading = true;
+                            getData();
+                          });
+                        }
+                      },
+                      child: Card(
+                        elevation: 8.0,
+                        color: Colors.black, // Change card color to black
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (dataList[i]['foto'] != null &&
+                                  dataList[i]['foto'].isNotEmpty)
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(
+                                      10.0), // Make the image rounded
+                                  child: Image.network(
+                                    dataList[i]['foto'],
+                                    width: 200, // Set width of the image
+                                    height: 200, // Set height of the image
+                                    fit: BoxFit
+                                        .cover, // Adjust how the image is inscribed into the space
+                                  ),
                                 ),
-                                const Divider(
-                                  color: Colors.grey,
+                              const Divider(
+                                color: Colors.grey,
+                              ),
+                              Text(
+                                dataList[i]['NamaItem'] ?? '',
+                                style: const TextStyle(
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 ),
-                                Row(
-                                  children: [
-                                    Text(dataList[i]['NamaItem'] ?? '')
-                                  ],
+                              ),
+                              const Divider(
+                                color: Colors.grey,
+                              ),
+                              Text(
+                                dataList[i]['deskripsi'] ?? '',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10.0,
                                 ),
-                                const Divider(
-                                  color: Colors.grey,
-                                ),
-                                Row(
-                                  children: [
-                                    Text(dataList[i]['deskripsi'] ?? '')
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'Stok',
-                                      style: TextStyle(
-                                          fontSize: 15.0, color: Colors.black),
+                              ),
+                              const Divider(
+                                color: Colors.grey,
+                              ),
+                              Row(
+                                children: [
+                                  const Text(
+                                    'Stok',
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.white,
                                     ),
-                                    const Text(' : '),
-                                    Text(dataList[i]['stok'].toString() ??
-                                        ''), // convert int to String
-                                  ],
-                                )
-                              ],
-                            )),
-                          ],
+                                  ),
+                                  const Text(
+                                    ' : ',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  Text(
+                                    dataList[i]['stok'].toString(),
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
+                  );
+                },
+              ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.black, // Change bottom app bar color to black
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            IconButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
+              },
+              icon: Icon(Icons.logout),
+              color: Colors.white, // Change icon color to white
+            ),
+            IconButton(
+              onPressed: () async {
+                var result = await Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const Create(),
                   ),
                 );
-              }),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () async {
-          var result = await Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (_) => const Create(),
+                if (result == 'true') {
+                  setState(() {
+                    loading = true;
+                    getData();
+                  });
+                }
+              },
+              icon: Icon(Icons.add),
+              color: Colors.white, // Change icon color to white
             ),
-          );
-          if (result == 'true') {
-            setState(() {
-              loading = true;
-              getData();
-            });
-          }
-        },
+          ],
+        ),
       ),
     );
   }

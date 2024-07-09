@@ -75,7 +75,7 @@ class _EEditDeleteState extends State<EEditDelete> {
               style: const TextStyle(fontSize: 12.0),
               controller: nameController,
               keyboardType: TextInputType.text,
-              decoration: const InputDecoration(labelText: "Nama Group"),
+              decoration: const InputDecoration(labelText: "Nama Item"),
             ),
           ),
           Padding(
@@ -84,7 +84,7 @@ class _EEditDeleteState extends State<EEditDelete> {
               style: const TextStyle(fontSize: 12.0),
               controller: descriptionController,
               keyboardType: TextInputType.text,
-              decoration: const InputDecoration(labelText: "Description Group"),
+              decoration: const InputDecoration(labelText: "Description"),
             ),
           ),
           Padding(
