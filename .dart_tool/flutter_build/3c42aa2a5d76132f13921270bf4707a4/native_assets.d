@@ -1,0 +1,1 @@
+ D:\\DEV\\Praktikum\ Mobile\ Device\\projek_akhir\\.dart_tool\\flutter_build\\3c42aa2a5d76132f13921270bf4707a4\\native_assets.yaml: 
