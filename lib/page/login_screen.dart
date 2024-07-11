@@ -1,3 +1,5 @@
+// login.dart
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -5,6 +7,8 @@ import 'home_screen.dart'; // Import halaman dashboard
 import 'register_screen.dart'; // Import halaman register
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -16,34 +20,28 @@ class _LoginScreenState extends State<LoginScreen> {
       'https://6687c6d60bc7155dc0190f77.mockapi.io/api/v1/users';
 
   Future<void> _login() async {
-    try {
-      final response = await http.get(Uri.parse(apiUrl));
-      if (response.statusCode == 200) {
-        List<dynamic> data = json.decode(response.body);
-        for (var user in data) {
-          if (user['user'] == _username && user['password'] == _password) {
-            // Login berhasil, arahkan ke halaman dashboard
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => HomeScreen(
-                          title: '',
-                        )));
-            return;
-          }
+    final response = await http.get(Uri.parse(apiUrl));
+    if (response.statusCode == 200) {
+      List<dynamic> data = json.decode(response.body);
+      for (var user in data) {
+        if (user['user'] == _username && user['password'] == _password) {
+          // Login berhasil, arahkan ke halaman dashboard
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const HomeScreen(
+                        title: '',
+                      )));
+          return;
         }
-        // Login gagal, tampilkan pesan kesalahan
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('Login failed. Please check your credentials.')));
-      } else {
-        // Gagal mengambil data dari API
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to fetch data from API')));
       }
-    } catch (e) {
-      // Menangani kesalahan jaringan atau lainnya
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
+      // Login gagal, tampilkan pesan kesalahan
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Login failed. Please check your credentials.')));
+    } else {
+      // Gagal mengambil data dari API
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to fetch data from API')));
     }
   }
 
@@ -56,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Card(
-              color: Color.fromARGB(255, 42, 38, 38),
+              color: const Color.fromARGB(255, 42, 38, 38),
               elevation: 8.0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(26.0),
@@ -73,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         'assets/logo_warungKomputer.png',
                         height: 200,
                       ),
-                      Text(
+                      const Text(
                         'Login Into App',
                         style: TextStyle(
                           fontSize: 24.0,
@@ -81,25 +79,25 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.white,
                         ),
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       TextFormField(
                         decoration: InputDecoration(
                           labelText: 'Username',
-                          labelStyle: TextStyle(color: Colors.white),
-                          prefixIcon: Icon(Icons.person),
+                          labelStyle: const TextStyle(color: Colors.white),
+                          prefixIcon: const Icon(Icons.person),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: const BorderSide(color: Colors.white),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.orangeAccent),
+                            borderSide: const BorderSide(color: Colors.orangeAccent),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter your username';
@@ -108,25 +106,25 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         onSaved: (value) => _username = value!,
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextFormField(
                         decoration: InputDecoration(
                           labelText: 'Password',
-                          labelStyle: TextStyle(color: Colors.white),
-                          prefixIcon: Icon(Icons.lock),
+                          labelStyle: const TextStyle(color: Colors.white),
+                          prefixIcon: const Icon(Icons.lock),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: const BorderSide(color: Colors.white),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.orangeAccent),
+                            borderSide: const BorderSide(color: Colors.orangeAccent),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         obscureText: true,
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -136,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         onSaved: (value) => _password = value!,
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
@@ -153,10 +151,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 50, vertical: 15),
                         ),
-                        child: Text('Login'),
+                        child: const Text('Login'),
                       ),
-                      SizedBox(height: 10),
-                      Text(
+                      const SizedBox(height: 10),
+                      const Text(
                         'or',
                         style: TextStyle(color: Colors.white),
                       ),
@@ -165,12 +163,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => RegisterPage()));
+                                  builder: (context) => const RegisterPage()));
                         },
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.white,
                         ),
-                        child: Text('Register'),
+                        child: const Text('Register'),
                       ),
                     ],
                   ),

@@ -32,7 +32,9 @@ class _CreateState extends State<Create> {
         photoController.text =
             pickedFile.path.split('/').last; // Show file name
       } else {
-        print('No image selected.');
+        if (kDebugMode) {
+          print('No image selected.');
+        }
       }
     });
   }

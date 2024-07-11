@@ -36,8 +36,8 @@ class _RegisterPageState extends State<RegisterPage> {
       // Register berhasil, arahkan ke halaman login
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Register successful. Please login.')));
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => LoginScreen()));
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()));
     } else {
       // Register gagal, tampilkan pesan kesalahan
       ScaffoldMessenger.of(context).showSnackBar(
@@ -74,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Card(
-              color: Color.fromARGB(255, 42, 38, 38),
+              color: const Color.fromARGB(255, 42, 38, 38),
               elevation: 8.0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),
@@ -91,7 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         'assets/logo_warungKomputer.png', // Ganti dengan path gambar Anda
                         height: 200,
                       ),
-                      Text(
+                      const Text(
                         'Register Into App',
                         style: TextStyle(
                           fontSize: 24.0,
@@ -103,21 +103,22 @@ class _RegisterPageState extends State<RegisterPage> {
                       TextFormField(
                         decoration: InputDecoration(
                           labelText: 'Username',
-                          labelStyle: TextStyle(color: Colors.white),
-                          prefixIcon: Icon(Icons.person),
+                          labelStyle: const TextStyle(color: Colors.white),
+                          prefixIcon: const Icon(Icons.person),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: const BorderSide(color: Colors.white),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.orangeAccent),
+                            borderSide:
+                                const BorderSide(color: Colors.orangeAccent),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please enter your username';
@@ -130,21 +131,22 @@ class _RegisterPageState extends State<RegisterPage> {
                       TextFormField(
                         decoration: InputDecoration(
                           labelText: 'Password',
-                          labelStyle: TextStyle(color: Colors.white),
-                          prefixIcon: Icon(Icons.lock),
+                          labelStyle: const TextStyle(color: Colors.white),
+                          prefixIcon: const Icon(Icons.lock),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: const BorderSide(color: Colors.white),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.orangeAccent),
+                            borderSide:
+                                const BorderSide(color: Colors.orangeAccent),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         obscureText: true,
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -161,21 +163,23 @@ class _RegisterPageState extends State<RegisterPage> {
                       TextFormField(
                         decoration: InputDecoration(
                           labelText: 'Confirm Password',
-                          labelStyle: TextStyle(color: Colors.white),
-                          prefixIcon: Icon(Icons.confirmation_num_rounded),
+                          labelStyle: const TextStyle(color: Colors.white),
+                          prefixIcon:
+                              const Icon(Icons.confirmation_num_rounded),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
+                            borderSide: const BorderSide(color: Colors.white),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.orangeAccent),
+                            borderSide:
+                                const BorderSide(color: Colors.orangeAccent),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white),
                         obscureText: true,
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -221,7 +225,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
+                                  builder: (context) => const LoginScreen()));
                         },
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.white,

@@ -50,10 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.only(left: 0.0), // Add left padding
           child: Image.asset(
             'assets/logo_warungKomputer.png',
-            height: 400,
+            height: 200,
           ),
         ),
-        title: Text(
+        title: const Text(
           'HOME',
           style: TextStyle(
             color: Colors.white,
@@ -108,8 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       10.0), // Make the image rounded
                                   child: Image.network(
                                     dataList[i]['foto'],
-                                    width: 200, // Set width of the image
-                                    height: 200, // Set height of the image
+                                    width: 80, // Set width of the image
+                                    height: 80, // Set height of the image
                                     fit: BoxFit
                                         .cover, // Adjust how the image is inscribed into the space
                                   ),
@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Text(
                                 dataList[i]['NamaItem'] ?? '',
                                 style: const TextStyle(
-                                  fontSize: 16.0,
+                                  fontSize: 10.0,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -130,9 +130,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Text(
                                 dataList[i]['deskripsi'] ?? '',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 10.0,
+                                  fontSize: 8.0,
                                 ),
                               ),
                               const Divider(
@@ -143,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const Text(
                                     'Stok',
                                     style: TextStyle(
-                                      fontSize: 15.0,
+                                      fontSize: 10.0,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -153,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   Text(
                                     dataList[i]['stok'].toString(),
-                                    style: TextStyle(color: Colors.white),
+                                    style: const TextStyle(color: Colors.white),
                                   ),
                                 ],
                               ),
@@ -175,10 +175,10 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               },
-              icon: Icon(Icons.logout),
+              icon: const Icon(Icons.logout),
               color: Colors.white, // Change icon color to white
             ),
             IconButton(
@@ -195,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   });
                 }
               },
-              icon: Icon(Icons.add),
+              icon: const Icon(Icons.add),
               color: Colors.white, // Change icon color to white
             ),
           ],

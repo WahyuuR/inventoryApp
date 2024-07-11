@@ -14,9 +14,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Inventory App',
       home: LoginScreen(), // Menetapkan halaman login sebagai halaman awal
     );
   }
 }
+  
