@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:projek_akhir/page/create_screen.dart';
-import 'package:projek_akhir/page/delete_screen.dart'; // Make sure this import is correct
-import 'package:projek_akhir/page/login_screen.dart'; // Make sure this import is correct
+import 'package:projek_akhir/page/delete_screen.dart';
+import 'package:projek_akhir/page/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.title});

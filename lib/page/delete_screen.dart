@@ -41,6 +41,11 @@ class _EEditDeleteState extends State<EEditDelete> {
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       Navigator.of(context).pop('true');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Item berhasil dirubah'),
+        ),
+      );
     } else {
       if (kDebugMode) {
         print('Request failed with status: ${response.statusCode}.');
@@ -54,6 +59,11 @@ class _EEditDeleteState extends State<EEditDelete> {
     var response = await delete(url);
     if (response.statusCode == 200 || response.statusCode == 204) {
       Navigator.of(context).pop('true');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Item berhasil dihapus'),
+        ),
+      );
     } else {
       if (kDebugMode) {
         print('Request failed with status: ${response.statusCode}.');

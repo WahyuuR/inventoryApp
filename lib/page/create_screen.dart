@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+
 import 'package:http/http.dart';
 
 class Create extends StatefulWidget {
@@ -18,26 +18,6 @@ class _CreateState extends State<Create> {
   TextEditingController photoController = TextEditingController();
   File? _image;
   String? _imageUrl;
-
-  final ImagePicker _picker = ImagePicker();
-
-  Future<void> _pickImage() async {
-    final XFile? pickedFile =
-        await _picker.pickImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-        _imageUrl = null;
-        photoController.text =
-            pickedFile.path.split('/').last; // Show file name
-      } else {
-        if (kDebugMode) {
-          print('No image selected.');
-        }
-      }
-    });
-  }
 
   createData() async {
     var url =
@@ -57,6 +37,11 @@ class _CreateState extends State<Create> {
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
       Navigator.of(context).pop('true');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Item berhasil ditambahkan'),
+        ),
+      );
     } else {
       if (kDebugMode) {
         print('Request failed with status:${response.statusCode}.');
@@ -89,26 +74,6 @@ class _CreateState extends State<Create> {
                 style: const TextStyle(fontSize: 12.0),
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(labelText: "Deskripsi"),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: photoController,
-                      style: const TextStyle(fontSize: 12.0),
-                      keyboardType: TextInputType.text,
-                      decoration: const InputDecoration(labelText: "Foto"),
-                      readOnly: true,
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.image),
-                    onPressed: _pickImage,
-                  ),
-                ],
               ),
             ),
             Padding(
