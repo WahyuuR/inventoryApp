@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "158417686278",
+    "project_id": "inventory-app-d0fd9",
+    "storage_bucket": "inventory-app-d0fd9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158417686278:android:a954177927c8389233d887",
+        "android_client_info": {
+          "package_name": "warung.komputer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtLx4cs4UufmE1FQK8IBU5ZGh81xN-rcI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

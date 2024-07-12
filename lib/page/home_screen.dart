@@ -42,6 +42,35 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _showLogoutConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Konfirmasi Logout'),
+          content: Text('Apakah Anda yakin ingin logout?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Tutup dialog
+              },
+              child: Text('Batal'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Tambahkan logika logout di sini
+                Navigator.of(context).pop(); // Tutup dialog setelah logout
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
+              },
+              child: Text('Logout'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -173,13 +202,10 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             IconButton(
               onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
+                _showLogoutConfirmationDialog();
               },
-              icon: const Icon(Icons.logout),
-              color: Colors.white, // Change icon color to white
+              icon: Icon(Icons.logout),
+              color: Colors.white,
             ),
             IconButton(
               onPressed: () async {
